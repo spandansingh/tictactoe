@@ -17,5 +17,3 @@ if __name__ == '__main__':
 
 	print(Game.move("X",8))
 	print(Game.move("O",1))
-
-	print(Game.move("X",2))

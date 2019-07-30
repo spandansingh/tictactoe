@@ -1,33 +1,24 @@
+import numpy as np
 
 class TicTacToe():
 
 	board = []
-	winning_patterns = [
-		[0, 1, 2],
-		[3, 4, 5],
-		[6, 7, 8],
-		[0, 3, 6],
-		[1, 4, 7],
-		[2, 5, 8],
-		[0, 4, 8],
-		[2, 4, 6]
-	]
-
+	n = 3
 	moveCount = 0
 
 	def __init__(self):
-		self.board = ["N"]*9
+		self.board = np.full(self.n ** 2, "N")
 
 	def move(self, sign, pos):
 		
 		self.moveCount += 1 
 
 		#Check if the position has occupied
-		if(self.isOccupied(pos)):
+		if self.isOccupied(pos):
 			return (False, 'Occupied')
 
 		self.board[pos] = sign
-
+		
 		#Check if the board is full
 		if self.isFull():
 			return (True, 'Tie')
@@ -40,15 +31,20 @@ class TicTacToe():
 
 	def isWon(self, sign, pos):
 		
-		for pattern in self.winning_patterns:
+		board = np.reshape(self.board, (self.n, self.n))
 
-			if pos not in pattern:
-				continue
-
-			t = filter(lambda x: self.board[x] != sign, pattern)
-		
-			if not list(t):
+		#Check for all rows and columns
+		for i in range(0, self.n):
+			if np.all(board[i,:] == sign) or np.all(board[:,i] == sign):
 				return True
+		
+		#Check for diagonals 
+		if np.all(board.diagonal() == sign): 
+			return True
+
+		#Check for antidiagonals
+		if np.all(np.fliplr(board).diagonal() == sign):
+			return True
 
 		return False
 
