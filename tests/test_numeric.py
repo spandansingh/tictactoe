@@ -5,7 +5,7 @@ sys.path.append('..')
 
 from Game import TicTacToe
 
-class TestSimple(unittest.TestCase): 
+class TestNumeric(unittest.TestCase): 
 
 	# Returns True or False.
 	def testWon(self): 
