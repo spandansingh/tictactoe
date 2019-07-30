@@ -66,7 +66,7 @@ class TestSimple(unittest.TestCase):
 		self.assertTrue(r[0])
 		self.assertEqual(r[1], 'Continue')
 
-		r = Game.move("O", 1)
+		r = Game.move("X", 1)
 		self.assertTrue(r[0])
 		self.assertEqual(r[1], 'Tie')
 
