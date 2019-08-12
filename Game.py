@@ -6,7 +6,7 @@ class TicTacToe(ABC):
 	board = None
 	n = 3
 	moveCount = 0
-	default_char = None
+	default_char = "N"
 
 	def __init__(self):
 		self.board = np.full(self.n ** 2, self.default_char)
@@ -31,21 +31,19 @@ class TicTacToe(ABC):
 
 		return (True, 'Continue')
 
-	@abstractmethod
-	def isWon(self, sign, pos):
-		pass
-
 	def isOccupied(self, pos):
 		return self.board[pos] != self.default_char
 
 	def isFull(self):
 		return self.moveCount == self.n ** 2
 
+	@abstractmethod
+	def isWon(self, sign, pos):
+		pass
+
 
 
 class SimpleTicTacToe(TicTacToe):
-
-	default_char = "N"
 
 	def isWon(self, sign, pos):
 
