@@ -1,21 +1,15 @@
 import numpy as np
+from abc import ABC, abstractmethod
 
-class TicTacToe():
+class TicTacToe(ABC):
 
 	board = None
 	n = 3
 	moveCount = 0
-	gameType = None
+	default_char = None
 
-	def __init__(self, gameType):
-		self.gameType = gameType
-
-		if self.gameType == "Simple":
-			self.board = np.full(self.n ** 2, "N")
-
-		elif self.gameType == "Numeric":
-			self.board = np.full(self.n ** 2, 0)
-		
+	def __init__(self):
+		self.board = np.full(self.n ** 2, self.default_char)
 
 	def move(self, sign, pos):
 		
@@ -37,38 +31,25 @@ class TicTacToe():
 
 		return (True, 'Continue')
 
+	@abstractmethod
 	def isWon(self, sign, pos):
-		
+		pass
+
+	def isOccupied(self, pos):
+		return self.board[pos] != self.default_char
+
+	def isFull(self):
+		return self.moveCount == self.n ** 2
+
+
+
+class SimpleTicTacToe(TicTacToe):
+
+	default_char = "N"
+
+	def isWon(self, sign, pos):
+
 		board = np.reshape(self.board, (self.n, self.n))
-
-		if self.gameType == "Simple":
-			return self.isWonSimple(board, sign, pos)
-
-		elif self.gameType == "Numeric":
-			return self.isWonNumeric(board, sign, pos)
-
-		return False
-
-	def isWonNumeric(self, board, sign, pos):
-		
-		sum_to_win = 15
-
-		#Check for all rows and columns
-		for i in range(0, self.n):
-			if np.sum(board[i,:]) == sum_to_win or np.sum(board[:,i]) == sum_to_win:
-				return True
-		
-		#Check for diagonals 
-		if np.sum(board.diagonal()) == sum_to_win: 
-			return True
-
-		#Check for antidiagonals
-		if np.sum(np.fliplr(board).diagonal()) == sum_to_win:
-			return True
-
-		return False
-
-	def isWonSimple(self, board, sign, pos):
 
 		#Check for all rows and columns
 		for i in range(0, self.n):
@@ -85,14 +66,30 @@ class TicTacToe():
 
 		return False
 
-	def isOccupied(self, pos):
 
-		if self.gameType == "Simple":
-			return self.board[pos] != "N"
+class NumericTicTacToe(TicTacToe):
 
-		elif self.gameType == "Numeric":
-			return self.board[pos] != 0
+	default_char = 0
+	sum_to_win = 15
 
-	def isFull(self):
-		return self.moveCount == 9
+	def isWon(self, sign, pos):
+
+		board = np.reshape(self.board, (self.n, self.n))
+
+		#Check for all rows and columns
+		for i in range(0, self.n):
+			if np.sum(board[i,:]) == self.sum_to_win or np.sum(board[:,i]) == self.sum_to_win:
+				return True
+		
+		#Check for diagonals 
+		if np.sum(board.diagonal()) == self.sum_to_win: 
+			return True
+
+		#Check for antidiagonals
+		if np.sum(np.fliplr(board).diagonal()) == self.sum_to_win:
+			return True
+
+		return False
+
+
 

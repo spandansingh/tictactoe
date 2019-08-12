@@ -3,13 +3,13 @@ import unittest
 import sys 
 sys.path.append('..')
 
-from Game import TicTacToe
+from Game import SimpleTicTacToe
 
 class TestSimple(unittest.TestCase): 
 
 	# Returns True or False.
 	def testWon(self): 
-		Game = TicTacToe("Simple")
+		Game = SimpleTicTacToe()
 
 		r = Game.move("X", 0)
 		self.assertTrue(r[0])
@@ -32,7 +32,7 @@ class TestSimple(unittest.TestCase):
 		self.assertEqual(r[1], 'Won')
 
 	def testTie(self):
-		Game = TicTacToe("Simple")
+		Game = SimpleTicTacToe()
 
 		r = Game.move("X", 0)
 		self.assertTrue(r[0])
@@ -71,7 +71,7 @@ class TestSimple(unittest.TestCase):
 		self.assertEqual(r[1], 'Tie')
 
 	def testOccupied(self):
-		Game = TicTacToe("Simple")
+		Game = SimpleTicTacToe()
 
 		r = Game.move("X", 0)
 		self.assertTrue(r[0])
@@ -90,7 +90,7 @@ class TestSimple(unittest.TestCase):
 		self.assertEqual(r[1], 'Occupied')
 
 	def testDiagonal(self):
-		Game = TicTacToe("Simple")
+		Game = SimpleTicTacToe()
 
 		r = Game.move("X", 0)
 		self.assertTrue(r[0])
@@ -113,7 +113,7 @@ class TestSimple(unittest.TestCase):
 		self.assertEqual(r[1], 'Won')
 
 	def testAntiDiagonal(self):
-		Game = TicTacToe("Simple")
+		Game = SimpleTicTacToe()
 
 		r = Game.move("X", 2)
 		self.assertTrue(r[0])
